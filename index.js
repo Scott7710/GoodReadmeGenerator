@@ -33,12 +33,13 @@ const axios = require("./utils/generateMarkdown");
             name: "use",
             message: "How do you use your project?"
          },{
-            ype: "input",
+            type: "list",
             name: "license",
+            choices: ['creative commons', 'mit', 'mozilla'],
             message: "Please provide a license for this project."
          },{
             type: "input",
-            name: "contributers",
+            name: "contributors",
             message: "Who contributed on this project?"
          },{
             type: "input",
@@ -55,6 +56,38 @@ const axios = require("./utils/generateMarkdown");
          },
       ]).then(function(answer){
          console.log('answers from our stuff!!', answer)
+         var badgeUrl = ''
+
+         if(answer.license ==="mit") {
+            badgeUrl = '[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)'
+         } else if (answer.license ==="mozilla") {
+            badgeUrl = '[![License: MPL 2.0](https://img.shields.io/badge/License-MPL%202.0-brightgreen.svg)](https://opensource.org/licenses/MPL-2.0)'
+         } else if(answer.license ==="creative commons") {
+            badgeUrl = '[![License: CC0-1.0](https://img.shields.io/badge/License-CC0%201.0-lightgrey.svg)](http://creativecommons.org/publicdomain/zero/1.0/)'
+         }
+
+         console.log('badge url!!!', badgeUrl)
+
+
+
+
+
+
+         var fakeReadMe = `
+# Title: ${answer.title}
+Badge: ${answer.badge}
+Description: ${answer.description}
+Installation: ${answer.installation}
+Use: ${answer.badge}
+License: ${badgeUrl}
+Contributors: ${answer.contributors}
+Test: ${answer. test}
+Username: ${answer.username}
+Repository: ${answer.repository}
+         `
+         console.log(fakeReadMe)
+         writeToFile('Scott.md', fakeReadMe)
+
       })
    };
 
@@ -62,13 +95,14 @@ const axios = require("./utils/generateMarkdown");
 
 //build README with input from user, appending it to name(README section)
    function writeToFile(fileName, data) {
+
       fs.writeFile(fileName, data, "utf8", function(err) {
-   if (err) {
-throw err;
-}
-      console.log(fileName + " was a success!");
-   });
-}
+         if (err) {
+            throw err;
+         }
+         console.log(fileName + " was a success!");
+      });
+   }
    
 
 async function generateContent(answers){}
