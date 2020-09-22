@@ -19,7 +19,7 @@ const axios = require("./utils/generateMarkdown");
          },{
             ype: "input",
             name: "badge",
-            message: "Please proved links for badges to display."
+            message: "Please provide links for badges to display."
          },{
             type: "input",
             name: "description",
